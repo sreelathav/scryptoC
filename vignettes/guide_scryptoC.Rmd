@@ -1,0 +1,132 @@
+---
+title: "scryptoC: Package for Cryptocurrency"
+author: "Sree Latha Vallabhaneni"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{scryptoC Package for Cryptocurrency}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+ 
+)
+```
+## Introduction
+
+  scryptoC scrapes data from [coinmarketcap](https://coinmarketcap.com/all/views/all/) view all table and also from the leading individual cryptocurrencies:  
+      [Bitcoin](https://coinmarketcap.com/currencies/bitcoin/), 
+      [Ethereum](https://coinmarketcap.com/currencies/ethereum/) and
+      [XRP](https://coinmarketcap.com/currencies/ripple/) boards. 
+     
+  Package carries 5 main functions, that perform various tasks: scrape, clean,optionally save, load said data. And one fit function, 2 functions that plot data. Lastly there is a function, that fire up the shiny app, which potrays the activity of all the main functions. The next part of the document describes, how each function can be used, input arguments and output details.
+
+
+## print_crytoC function
+  
+  Using 'rvest' and 'xml2' libraries, this function scrapes data from the coinmarketcap view all html table. Cleans the extracted object and by passing save_file = 'yes' argument to the function, saves the current information of all the reported cryptocurrencies to the csv file, 'perf_cryptoC.csv' in the present working directory. The by product of running this function is, it prints the first 15 leading currencies data to the console, giving the idea about the current situation of the currencies. The information criteriae: Name, Market cap (in USD), Price(in USD), % variation in 1 hour, 24 hours and 7 days and Rank of the currency, No. 1 being Bitcoin.
+    
+```{r, print}
+               library(scryptoC) 
+               print_cryptoC()
+               #print_cryptoC(save_file = 'yes')
+```
+
+## get_crytoC function
+  
+  This function requires no arguments to be sent. By running the function, it extracts an year of data of Bitcoin, Ethereum and XRP html pages of the coinmarketcap website. Clean and load the data for further use.The variales stored are: Name,Date, Market cap (in Billions of USD), Volume, High, Low, Closing prices (in USD), nDate. The variable nDate being derived variable based on time. Today's date takes value 1 (365/365), yesterday 364/365 and the start date of the data takes 1/365. This function returns the object of class 'cryptoC_data'. This is a list of Bitcoin, Ethereum and XRP data objects as tibbles. 
+    
+```{r, load}
+                 
+                 obj <-  get_cryptoC()
+               # bex <-  get_cryptoC()
+               
+```
+
+
+### Acessing the returned object for the individual currencies
+  
+  Once the get_cryptoC function is run, individual currency objects can be accessed for extended analysis and known model fitting or new model designing purposes.
+
+```{r,  results='asis'}
+                        
+                         # obj <-  get_cryptoC()
+                          knitr::kable(head(obj$Bitcoin,5))
+                          knitr::kable(tail(obj$XRP,5))
+                        # knitr::kable(obj$Ethereum)
+                        # bex <-  get_cryptoC()
+                        # knitr::kable(bex$XRP)
+```
+  
+## plotAll.cryptoC_data function  
+  
+This function require the object of class 'cryptoC_data' and the Currency_type, one from c('Bitcoin', 'Ethereum', 'Xrp') as arguments to be passed. By running the function, it plots the numeric variables of the chosen cryptocurrency data object.  
+  
+```{r }
+                
+                # obj <-  get_cryptoC()
+                  plotAll(obj,'XRP')
+               # bex <-  get_cryptoC()
+               # plotAll(bex,'Bitcoin')
+               # plotAll(bex,'Ethereum')
+               
+```
+  
+## fit.crytoC_data function
+
+  This function require the object of class 'cryptoC_data', Currency_type, one from c('Bitcoin', 'Ethereum', 'Xrp') and variable type one from  c('Mcap', 'Close') as arguments to be passed. By running the function, it fits smooth spline model for the currency variable chosen. It returns the list of data object, model, currency_type and variable_type as 'cryptoC_fit' class object.
+    
+```{r }      
+                
+                 #obj <-  get_cryptoC()
+                 outXC <-  fit(obj,'XRP','Close')
+               # outBM <-  fit(obj,'Bitcoin','Mcap')
+               # outEC <-  fit(bex,'Ethereum','Close')
+               # outXM <-  fit(bex,'XRP','Mcap')
+               
+```
+
+### Acessing the returned fit object for the  currency variable 
+  
+ Once the fit function is run succesfully, the cryptocurrency variable data, model objects can be accessed for extended analysis and the validation of the smooth.spline model for the type of data chosen. The crypto currency type for which variable the model is fitted can be known from the returned object.
+
+```{r,  results='asis'}
+                          #obj <-  get_cryptoC()
+                          #outXC <-  fit(obj,'XRP','Close')
+                          knitr::kable(head(outXC$data,5))
+                          #knitr::kable(head(outXC$model,5))
+                          #currency_C <- outXC$currency_type
+                          #var <- outXC$var_type
+```
+
+## plot.cryptoC_fit function
+ 
+ This function plots the predicted data from the smooth spline model fitted object for the chosen cryptocurrency variable. The fit object of class 'cryptoC_fit' and optionally time_grid arguments to be sent for the plot function.
+
+```{r }
+                
+                 #obj <-  get_cryptoC()
+                # outXC <-  fit(obj,'XRP','Close')
+                 plot(outXC)
+               # plot(outBM, time_grid)
+               # plot(outEC)
+               
+```
+  
+## cryptoC_app 
+
+  This is shiny app based on the main functions of scryptoC package. 
+  
+```{r, shniy_app}
+                
+                # cryptoC_app()
+               
+```
+
+  From the side pannel, one can select the cryptocurrency c('Bitcoin', 'Ethereum', 'Xrp') and variable c('Mcap', 'Close') type. Lower part of the side bar shows the variable plots verses nDate for the chosen cryptocurrency. The main panel shows the smooth splime model fit for the cryptocurrency variable. The lower part of the main pannel shows the current information of the 15 leading cryptocurrencies. The end note of this app is, after showing the panel, it takes a while to load, the other parts of the app board. This is because the underlying data extraction involve 4 httml node extraction tasks. Once the default widets open up, one can select the options from the panel, like changing the currency and variable types.
+The app code to be run as a chunk, by removing (#) comment status. 
+

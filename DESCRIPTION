@@ -1,0 +1,31 @@
+Package: scryptoC
+Type: Package
+Title: Crypto Currency Analysis
+Version: 0.1.0
+Authors@R: person("Sree Latha", "Vallabhaneni", email = "vallabhaneni.sreelatha@gmail.com", role = c("aut","cre"))
+Description: This package looks at Crypto currency as a printed data for the present status of leading currencies.
+    Extract, clean and loads one year data of Bitcoin, Ethereum, XRP from coinmarketcap.
+    Plot the variables available for the chosen currency with respect to time.
+    Fit the data for chosen currency and selected variable out of Closing price and Market Cap using smooth.spline model.
+    Plots the fit data of the chosen currency and variable.
+License: GPL (>=2)
+Encoding: UTF-8
+LazyData: true
+Imports: dplyr,
+         tidyr,
+         readr,
+         magrittr,
+         lubridate,
+         rvest,
+         xml2,
+         utils,
+         ggplot2,
+         viridis,
+         stats,
+         tibble,
+         shiny
+RoxygenNote: 6.1.0
+Suggests: testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

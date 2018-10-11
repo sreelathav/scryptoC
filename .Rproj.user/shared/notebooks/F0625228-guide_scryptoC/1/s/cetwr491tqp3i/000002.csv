@@ -1,0 +1,4 @@
+"0","               # obj <-  get_cryptoC()"
+"0","                 outXC <-  fit(obj,'XRP','Close')"
+"2","Error in fit(obj, ""XRP"", ""Close"") : could not find function ""fit""
+"

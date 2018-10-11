@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1534012865605.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "C58A46C4",
+    "lastKnownWriteTime" : 1534024533,
+    "last_content_update" : 1534024533714,
+    "path" : "~/advDataProgR/labs/scryptoC/R/fit.cryptoC_data.R",
+    "project_path" : "R/fit.cryptoC_data.R",
+    "properties" : {
+        "cursorPosition" : "76,0",
+        "scrollLine" : "46",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
