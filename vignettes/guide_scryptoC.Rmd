@@ -69,10 +69,10 @@ This function require the object of class 'cryptoC_data' and the Currency_type, 
 ```{r }
                 
                 # obj <-  get_cryptoC()
-                  plotAll(obj,'XRP')
+                  plotAll.cryptoC_data(obj,'XRP')
                # bex <-  get_cryptoC()
-               # plotAll(bex,'Bitcoin')
-               # plotAll(bex,'Ethereum')
+               # plotAll.cryptoC_data(bex,'Bitcoin')
+               # plotAll.cryptoC_data(bex,'Ethereum')
                
 ```
   
@@ -82,11 +82,11 @@ This function require the object of class 'cryptoC_data' and the Currency_type, 
     
 ```{r }      
                 
-                 #obj <-  get_cryptoC()
-                 outXC <-  fit(obj,'XRP','Close')
-               # outBM <-  fit(obj,'Bitcoin','Mcap')
-               # outEC <-  fit(bex,'Ethereum','Close')
-               # outXM <-  fit(bex,'XRP','Mcap')
+                 obj <-  get_cryptoC()
+                 outXC <-  fit.cryptoC_data(obj,'XRP','Close')
+               # outBM <-  fit.cryptoC_data(obj,'Bitcoin','Mcap')
+               # outEC <-  fit.cryptoC_data(bex,'Ethereum','Close')
+               # outXM <-  fit.cryptoC_data(bex,'XRP','Mcap')
                
 ```
 
@@ -96,7 +96,7 @@ This function require the object of class 'cryptoC_data' and the Currency_type, 
 
 ```{r,  results='asis'}
                           #obj <-  get_cryptoC()
-                          #outXC <-  fit(obj,'XRP','Close')
+                          #outXC <-  fit.cryptoC_data(obj,'XRP','Close')
                           knitr::kable(head(outXC$data,5))
                           #knitr::kable(head(outXC$model,5))
                           #currency_C <- outXC$currency_type
@@ -109,21 +109,21 @@ This function require the object of class 'cryptoC_data' and the Currency_type, 
 
 ```{r }
                 
-                 #obj <-  get_cryptoC()
-                # outXC <-  fit(obj,'XRP','Close')
+                 obj <-  get_cryptoC()
+                 outXC <-  fit.cryptoC_data(obj,'XRP','Close')
                  plot(outXC)
                # plot(outBM, time_grid)
                # plot(outEC)
                
 ```
   
-## cryptoC_app 
+## scryptoC_app 
 
   This is shiny app based on the main functions of scryptoC package. 
   
 ```{r, shniy_app}
                 
-                # cryptoC_app()
+                # scryptoC_app()
                
 ```
 
